@@ -1,0 +1,17 @@
+<h1>{{title}}</h1>
+
+<button (click)="toggleVisible($event)">click me</button>
+
+
+<input #inputTitle>
+<button (click)="setTitle(inputTitle.value)">change</button>
+
+
+
+<div *ngIf="visible">Visible</div>
+
+<ul>
+  <li *ngFor="let user of users">
+    <app-user [user]="user" (delete)="deleteUserHandler($event)"></app-user>
+  </li>
+</ul>

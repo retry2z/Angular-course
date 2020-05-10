@@ -1,0 +1,25 @@
+npm i g @angular/cli
+
+ng new <app> //generate new app
+
+ng g m <core> // generate new Modul // Head compomonent
+
+ng g c core/<navigation> // generate component
+
+ng g s <service> // generate services for manipulate data.
+
+ng g g <auth> // generate guard for router paths permissions and others.
+
+ng serv // Compile and serve
+
+ng g d <name> // generate directive like validater in shared module.
+
+export core Modul 
+
+
+
+----INIT-----
+CORE MODUL - CORE COMPONENT 
+USER MODUL - USER COMPONENT
+PRODUCT MODUL - PRODUCT COMPONENT
+SHARED MODUL

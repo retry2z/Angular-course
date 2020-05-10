@@ -1,0 +1,20 @@
+<nav>
+    <ul>
+        <li>
+            <a routerLink="/">TODO</a>
+        </li>
+        <li>
+            <a routerLink="/user">USER</a>
+        </li>
+        <li>
+            <input #InputField type="text">
+            <a [routerLink]="['/user', InputField.value]">params</a>
+        </li>
+        <li>
+            <a [routerLink]="['/user', _id]" (click)="setIdentification(InputField.value)"> params 2</a>
+        </li>
+        <li>
+            <a routerLink=" /user" [queryParams]="{status:'Ready'}">queryParams</a>
+        </li>
+    </ul>
+</nav>

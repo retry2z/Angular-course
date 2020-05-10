@@ -1,0 +1,18 @@
+<ng-template #loader let-test="test">
+    {{test}}
+    <div>Loading...</div>
+</ng-template>
+
+<ng-template #list let-test="test">
+    {{test}}
+    <div *ngFor="let user of users">
+        <span data-animal-type="bird">{{user.username}}</span>
+        <button (click)="selectUserHandler(user.id)">Select</button>
+    </div>
+</ng-template>
+
+<!--- 
+    <ng-container *ngIf="users then list; else loader;"></ng-container>
+ -->
+<ng-container *ngTemplateOutlet="users? list : loader; context: {test: 'this is from UserListComponent.html'}">
+</ng-container>

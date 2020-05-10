@@ -1,0 +1,1044 @@
+Creating Directives. Handling Forms.
+
+Directives and Forms
+
+Software University
+
+https://softuni.bg
+
+SoftUni Team
+
+Technical Trainers
+
+
+Directives
+
+Attribute Directives
+
+Structural Directives
+
+Building an Attribute Directive
+
+Handling Forms
+
+Template-Driven Forms
+
+Reactive Forms
+
+Table of Contents
+
+2
+
+
+Have a Question?
+
+
+
+sli.do
+#js-frameworks
+
+3
+
+
+Directives
+
+Manipulating the DOM in Angular
+
+
+There are three types of directives in Angular
+
+Attribute directives - change the appearance or 
+behavior of an element, component or another
+directive (ngStyle and ngClass)
+
+Structural directives - change the DOM layout by 
+adding and removing DOM elements 
+(*ngIf and *ngFor)
+
+Components - directives with a template
+
+Directives Overview
+
+5
+
+
+Structural Directives
+
+Have a leading *
+
+Affect a whole area in the 
+DOM
+
+Examples - *ngIf, *ngFor
+
+Attribute Directives
+
+Look like HTML attributes
+
+Only affect/change the
+element they are added to
+
+Example - ngStyle, ngClass
+
+Directives Comparison
+
+6
+
+
+An attribute directive minimally requires  building a controller 
+class annotated with @Directive
+
+Surround the selector with square brackets
+
+Build a Simple Attribute Directive
+
+import { Directive } from '@angular/core'
+
+@Directive({ 
+
+  selector: '[appHighlight]' 
+
+})
+
+export class HighlightDirective {
+
+ constructor() { } 
+
+}
+
+Import the directive in declarations array
+
+7
+
+
+Now inject the referenced element and change it's background style
+
+Attach Styles to Referenced Elements
+
+export class HighlightDirective implements OnInit {
+
+ constructor(private el : ElementRef) {}
+
+
+
+ ngOnInit() {
+
+    this.el.nativeElement.style.backgroundColor = 'yellow';
+ }
+
+}
+
+8
+
+
+It's not a good practice to directly access DOM 
+elements via ElementRef
+
+Angular is not limited to run only on the browser
+(could run with service workers)
+
+Services Worker – environment where the DOM is
+inaccessible
+
+Use Renderer2 to manipulate DOM elements
+
+Warning - Use Renderer2
+
+import { Renderer2 } from '@angular/core'
+
+9
+
+
+Inject the renderer and access it's methods to change the DOM
+
+constructor( private renderer: Renderer2) {  }
+
+ngOnInit() {
+
+  this.renderer.setStyle(
+
+    this.el.nativeElement,
+
+    'background-color',
+
+    'red'
+
+  );
+
+}
+
+Renderer2 Usage
+
+10
+
+
+A directive can be more dynamic and detect user events
+
+Attach host listeners to handle different DOM events
+
+Respond to Events
+
+import { HostListener } from '@angular/core'
+
+@HostListener('mouseenter') onMouseLeave(e) {
+
+  this.highlight('yellow');
+
+}
+
+@HostListener('mouseleave') onMouseLeave(e) {
+
+  this.highlight('blue');
+
+}
+
+11
+
+
+Bind to DOM properties without Renderer
+
+Using HostBinding
+
+import { HostBinding } from '@angular/core'
+
+export class BasicHighlightDirective {
+
+  @HostBinding('style.backgroundColor') 
+
+    backgroundColor: string;
+
+
+
+  highlight(color: string) {
+
+    this.backgroundColor = color;
+
+  }
+
+}
+
+12
+
+
+Handling Forms
+
+Template-Driven Forms
+
+
+Forms are the mainstay of business applications
+
+We use Forms to
+
+Register/Log in
+
+Submit a help request
+
+Place an order
+
+Book a flight and more
+
+Guide the user efficiently and effectively when 
+creating forms
+
+Forms Overview
+
+14
+
+
+Build a Form by writing templates using the Angular template syntax
+
+Use ngModel to create two-way data binding
+
+Track state changes (validity of form controls)
+
+Provide visual feedback using special CSS classes
+
+Display validation errors when needed
+
+Use reference variables to share information
+
+Template-Driven Forms
+
+15
+
+
+Create a Template-Driven Form looking like this
+
+
+
+Problem: Create a Template-Driven Form
+
+16
+
+
+Bootstrap is the most popular open-source front-end 
+framework for designing web sites and web apps
+
+Install via npm and import it inside angular.json
+
+Create containers, form-groups, form-controls, style buttons 
+and errors
+
+Import Bootstrap
+
+"styles": [
+
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+
+  "src/styles.css"
+
+]
+
+17
+
+
+Angular is module based and to handle Forms (ngModel, 
+ngSubmit, ngForm) we need Forms Module
+
+Import the following in app.module.ts
+
+Introducing Forms Module
+
+import { FormsModule } from '@angular/forms';
+
+
+
+@NgModule({
+
+  imports: [ 
+
+   BrowserModule, 
+
+   FormsModule
+
+  ]
+
+})
+
+export class AppModule {  }
+
+18
+
+
+An Angular form has two parts
+
+An HTML-based template
+
+Component class to handle data
+
+Create Form Component
+
+@Component({…})
+
+export class LaptopFormComponent {
+
+  operatingSystems: string[] = [
+
+    'Windows 10', 
+
+    'Linux', 
+
+    'Mac OS' 
+
+  ];
+
+}
+
+19
+
+
+Initial HTML Template
+
+<div class="container">
+
+  <h1>Laptop Form</h1>
+
+  <form>
+
+    <div class="form-group">
+
+      <label for="processor">Proccessor</label>
+
+      <input type="text" class="form-control" id="processor" 
+
+      required>
+
+    </div>
+
+    <div class="form-group">
+
+      <label for="ram">RAM</label>
+
+      <input type="text" class="form-control" id="ram" 
+
+      required>
+
+    </div>
+
+    <div class="form-group">
+
+      <label for="hardDisk">Hard Disk (GB)</label>
+
+      <input type="number" class="form-control" id="hardDisk">
+
+    </div>
+
+  </form>
+
+</div>
+
+20
+
+
+Initial HTML Template (2)
+
+<div class="form-group">
+
+  <label for="os">Operating System</label>
+
+    <select class="form-control" 
+
+      id="os" 
+
+      required>
+
+        <option *ngFor="let os of operatingSystems"     		  	[value]="os">{{os}}</option>
+
+    </select>
+
+</div>
+
+
+
+<button type="submit" class="btn btn-success">Submit</button>
+
+21
+
+
+We need to display, listen and extract data at the same time
+
+This is done by using the ngModel directive
+
+The following directive will not work without a
+name attribute
+
+The NgModel Directive
+
+<input type="text" 
+
+  class="form-control" id="processor"
+
+  ngModel />
+
+<input name="processor"/>
+
+22
+
+
+Declare a template variable to the form
+
+Angular automatically  attaches an NgForm directive
+
+The NgForm directive adds additional features
+
+Monitors properties
+
+Validates properties
+
+It holds a valid property which is true only if all controls are valid
+
+The NgForm Directive
+
+<form #f="ngForm">
+
+23
+
+
+Use @ViewChild to access the local reference
+
+Access the Local Reference
+
+@Component({…})
+
+export class LaptopFormComponent implements AfterViewInit {
+
+  @ViewChild('f') form: NgForm
+
+
+
+  ngAfterViewInit() {
+
+    console.dir(this.form);
+
+  }
+
+}
+
+24
+
+
+To submit a form bind ngSubmit event property to form
+component's onSubmit method
+
+The onSubmit method should send the control values
+directly to an API through a service of some sort
+
+Submit a Form
+
+<form (ngSubmit)="onSubmit()" #f="ngForm">
+
+onSubmit() {
+
+ const content = this.form.value;
+
+  // Send model to API
+
+}
+
+25
+
+
+The NgForm Directive
+
+Tracks if the user touched the control
+
+Tracks if the user changed the control
+
+Tracks if the control is valid
+
+The directive doesn't just track state
+
+It can update the control with special Angular CSS 
+classes
+
+Leverage those class names to change appearance
+
+Tracking Form State
+
+26
+
+
+State
+
+Class if true
+
+Class if false
+
+The control was visited
+
+ng-touched
+
+ng-untouched
+
+The control's value was 
+changed
+
+ng-dirty
+
+ng-pristine
+
+The control is valid
+
+ng-valid
+
+ng-invalid
+
+Track Control State
+
+27
+
+
+You can mark required fields and invalid data at the same time with a colored bar on the left of the input box
+
+Add Custom CSS for Visual Feedback
+
+input.ng-valid {
+
+  border-left: 5px solid #42A948; /* green */
+
+}
+
+
+input.ng-invalid.ng-touched {
+
+  border-left: 5px solid #A94442; /* red */
+
+}
+
+styles.css
+
+28
+
+
+Add HTML 5 attributes to input fields for validation
+
+Angular tracks most attributes and changes the state 
+depending on what the user enters
+
+Add Validation 
+
+<input type="text" class="form-control"
+
+ id="processor" 
+
+ required
+
+ minLength="5"
+
+ ngModel
+
+ name="processor">
+
+29
+
+
+Angular is shipped with the following validators
+
+https://angular.io/api/forms/Validators
+
+For template-driven forms you will need directives
+
+https://angular.io/api?type=directive
+
+There are multiple npm packages for custom validators
+
+https://www.npmjs.com/package/ng5-validation
+
+List of Validators/Third-party Validators
+
+30
+
+
+The user should know exactly what went wrong
+
+Leverage the control's state to reveal a helpful message
+
+Add a template reference variable in the input
+
+Outputting Error Messages
+
+<input type="text" class="form-control"
+
+ id="processor"
+
+ required
+
+ ngModel
+
+ name="processor"
+
+ #processor="ngModel">
+
+31
+
+
+Create a div and display it only when the control state is invalid
+
+Use the reference variable to check the state
+
+Add a helpful message inside the div
+
+Outputting Error Messages (2)
+
+<div *ngIf="processor.invalid && proccer.touched" alert alert-danger">
+
+   Processor is required!
+
+</div>
+
+32
+
+
+We can bind the form's overall validity using the reference 
+variable declared in the <form> tag
+
+Block the submit button in case a control has invalid state
+
+Form Overall Validity
+
+<button type="submit" class="btn btn-success" [disabled]="f.invalid">
+
+ Submit
+
+</button>
+
+33
+
+
+Instantly react to any changes using two-way data binding
+
+Two-way Data Binding
+
+<input type="text" class="form-control"
+
+ id="processor" 
+
+ required
+
+ [(ngModel)]="laptop.processor"
+
+ name="processor"
+
+ #processor="ngModel">
+
+constructor() { 
+
+ this.laptop = new Laptop()  
+
+}
+
+34
+
+
+Group similar input fields using ngModelGroup
+
+Useful for input fields that have the same validation
+
+Password/Confirm password 
+
+The NgModelGroup Directive
+
+<div 
+
+ ngModelGroup="passData" 
+
+ #passData="ngModelGroup">
+
+<div *ngIf="passData.invalid && passData.touched">
+
+  Both passwords must be valid!
+
+</div>
+
+35
+
+
+Use setValue() or patchValue() to change the form from inside
+the component or add default values
+
+Setting and Patching Form Value
+
+changeInput() {
+  this.laptopForm.form.patchValue({
+
+    ram: '16 GB'
+
+    processor: 'Intel Core i7'
+  });
+
+}
+
+36
+
+
+After a form is submitted resetting is necessary to clear all
+input fields and reset the track state
+
+Resetting the Form
+
+onSubmit() {
+
+  const body = this.form.value;
+
+  // Send body to an API
+
+  this.form.reset();
+}
+
+37
+
+
+Handling Forms
+
+Reactive Forms
+
+
+There are some complex scenarios that can't be 
+resolved using template-driven forms
+
+Dynamically add input elements
+
+Watch what the user types and react to it 
+(Observables)
+
+Wait validation until typing stops
+
+Immutable data structures (no two-way binding)
+
+Reactive Forms Overview
+
+39
+
+
+In order to use reactive forms we need the Reactive Forms 
+Module
+
+Now we have access to all the needed directives
+
+formGroup
+
+formControl and formControlName
+
+formGroupName
+
+formArrayName
+
+Reactive Forms Module
+
+import { ReactiveFormsModule } from '@angular/forms'
+
+40
+
+
+The component class will create instances of FormGroup and 
+FormControl that will bind later in the template
+
+The core idea is to transfer most of the logic from the template inside the component class
+
+The Component Class
+
+import { FormGroup, FormControl } from '@angular/forms'
+
+this.laptopForm = new FormGroup({
+
+  processor : new FormControl('Intel Core i7'),
+
+  ram : new FormControl('16 GB DDR4')
+
+});
+
+41
+
+
+In the template we have to mark the main formGroup and 
+after that add formControlName to each form control
+
+
+
+The Template
+
+<form (ngSubmit)="save()" [formGroup]="laptopForm">
+
+<input type="text" class="form-control" id="processor" 
+
+ required
+
+ formControlName="processor">
+
+The name of the key instance
+
+42
+
+
+Two ways to access the properties of the form model
+
+
+
+The idea is to shorten the template and transfer such logic in the component when using reactive forms
+
+
+
+Accessing Form Model Properties
+
+laptopForm.controls.processor.valid
+
+laptopForm.get('processor').valid
+
+43
+
+
+Use FormBuilder service to avoid create instances of 
+FormGroup and FormControl name
+
+Inject it into the constructor
+
+Using Form Builder
+
+import { FormBuilder } from '@angular/forms';
+
+constructor(private fb : FormBuilder) { }
+
+this.laptopForm = this.fb.group({
+
+  processor : 'Intel Core i7',
+
+  ram : '16 GB DDR4'
+
+});
+
+44
+
+
+In reactive forms we can add validation more dynamically 
+based on user action
+
+We can adjust rules at runtime
+
+We can create custom validators
+
+Custom validators excepting parameters
+
+Cross-field validations and more
+
+Validation
+
+45
+
+
+Defining our FormGroup with a FormBuilder allows us to add 
+an array of validations using the Validators class
+
+Setting Up Build-in Validation
+
+this.laptopForm = this.fb.group({
+
+  processor : [ 
+
+   'Intel core i7', [
+
+      Validators.required,
+
+      Validators.minLength(10) 
+
+    ] 
+
+  ]
+
+});
+
+46
+
+
+The formGroup directive has an errors property which can be used to show errors only when needed
+
+Adjust the Template
+
+<div *ngIf="(laptopForm.get('processor').touched 
+
+|| laptopForm.get('processor').dirty) 
+
+&& laptopForm.get('processor').errors" class="alert alert-danger">
+
+<span *ngIf="laptopForm.get('processor').errors.required">
+
+  Processor is required!
+
+</span>
+
+<span *ngIf="laptopForm.get('processor').errors.minlength">
+
+  Processor should be at least 10 symbols long!
+
+</span>
+
+</div>
+
+47
+
+
+Using Reactive Forms we have the ability to watch and react to changes on form groups and form controls
+
+Whenever a value of an input changes we can subscribe to that event and handle the observable
+
+Watching and Reacting to Changes
+
+this.laptopForm.get('os')
+
+.valueChanges
+
+.subscribe(console.log);
+
+48
+
+
+Import throttleTIme from the following library
+
+Attach the throttleTIme function to a form control's 
+valueChanges event
+
+Reactive Transformations Example
+
+import { throttleTime } 'rxjs/operators';
+
+processorControl.valueChanges
+
+.pipe(throttleTime(1500))
+
+.subscribe(value => {
+
+   console.log(value);
+
+});
+
+49
+
+
+Summary
+
+
+
+
+
+
+
+There are three types of Directives
+
+Components, Structural, Attribute
+
+There are two ways to handle forms in Angular
+
+Template-driven Forms (two-way binding)
+
+Reactive Forms (more dynamic approach)
+
+Directives are integrated into Form Modules
+
+50
+
+
+Questions?
+
+
+SoftUni Diamond Partners
+
+52
+
+
+SoftUni Organizational Partners
+
+53
+
+
+Software University – High-Quality Education, Profession and Job for Software Developers
+
+softuni.bg, softuni.org 
+
+Software University Foundation
+
+softuni.foundation
+
+Software University @ Facebook
+
+facebook.com/SoftwareUniversity
+
+Software University Forums
+
+forum.softuni.bg
+
+Trainings @ Software University (SoftUni)
+
+54
+
+
+This course (slides, examples, demos, exercises, homework, documents, videos and other assets) is copyrighted content
+
+Unauthorized copy, reproduction or use is illegal
+
+© SoftUni – https://softuni.org
+
+© Software University – https://softuni.bg
+
+License
+
+55
+

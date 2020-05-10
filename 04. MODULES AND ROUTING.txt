@@ -1,0 +1,700 @@
+Creating Single-Page Applications
+
+Modules and Routing
+
+Software University
+
+https://softuni.bg
+
+SoftUni Team
+
+Technical Trainers
+
+
+The NgModule
+
+Creating your own modules
+
+Routing Overview
+
+Router Module
+
+Links, Redirects, Query Params
+
+Router Guards
+
+Table of Contents
+
+2
+
+
+Have a Question?
+
+
+
+sli.do
+#js-frameworks
+
+3
+
+
+The NgModule
+
+Building Blocks of the Application
+
+
+NgModules help organize an application into cohesive blocks of functionality
+
+An NgModule is a class decorated with @NgModule
+
+Many Angular libraries are NgModules
+
+FormsModule, HttpClientModule, RouterModule
+
+Many third-party libraries are available as NgModules
+
+Material Design, Ionic, Angular Fire
+
+Angular Modules Overview
+
+import { NgModule } from '@angular/core';
+
+
+
+5
+
+
+Creating you own modules is useful when the 
+application grows
+
+Only the root module should contain BrowserModule
+
+All custom-made modules should import CommonModule
+
+Custom made modules have exports array
+
+Components added in declarations are private by default
+
+This is done because of reusability
+
+Creating Custom Modules
+
+import { CommonModule } from '@angular/common';
+
+
+
+6
+
+
+Creating Custom Modules (2)
+
+import { NgModule } from '@angular/core';
+
+import { CommonModule } from '@angular/common';
+
+
+@NgModule({
+
+imports: [ CommonModule ],
+
+declarations: [ 
+
+ CustomerListComponent,
+
+ CustomerDetailsComponent ],
+
+exports: [ CustomerListComponent ],
+
+providers: [ CustomersService ]
+
+})
+
+export class CustomersModule { }
+
+Export to render outside this module
+
+7
+
+
+Shared Module - to contain all common components, 
+directives and pipes used by a lot of places
+
+Core Module - to contain singleton services and components 
+needed only once in the application
+
+Authentication Module (Register, Login, Logout)
+
+Feature Module - to contain feature specific components
+
+More info: https://angular.io/guide/ngmodules
+
+Suggested Common Module
+
+
+
+8
+
+
+Routing Concepts
+
+Navigation for Single Page Applications
+
+
+Allows navigation, without reloading the page
+
+Pivotal element of writing Single Page Applications
+
+What is Routing?
+
+
+
+Link
+
+
+
+
+
+
+
+
+
+HTML
+
+HTML
+
+HTML
+
+HTML
+
+Link
+
+Link
+
+HTML
+
+ROUTER
+
+
+
+HTML
+
+HTML
+
+HTML
+
+HTML
+
+Standard Navigation
+
+Navigation using Routing
+
+10
+
+
+A Router loads the appropriate content when the location changes
+
+E.g. when the user manually enters an address
+
+Conversely, a change in content is reflected in the address bar
+
+E.g. when the user clicks on a link
+
+Benefits
+
+Load all scripts only once
+
+Maintain state across multiple pages
+
+Browser history can be used
+
+Build User Interfaces that react quickly
+
+Single Page Applications
+
+
+
+11
+
+
+Router Module
+
+Setup, Links, Redirects, Parameters
+
+
+
+
+First add the base meta tag into the index.html file
+
+Add a nav tag so the user can navigate through the app
+
+Define the router outlet where the content will be rendered
+
+Define the Template
+
+<base href="/">
+
+Usually added by the CLI
+
+<nav>
+
+ <a routerLink="/home">Home</a>
+
+ <a routerLink="/about">About</a>
+
+</nav>
+
+<router-outlet></router-outlet>
+
+Use routerLink instead of href
+
+13
+
+
+Import NgModule, RouterModule and Routes
+
+Define the needed routes as an array of objects
+
+Create Routes Module
+
+import { NgModule } from '@angular/core'
+
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+
+  { path: 'home', component: HomeComponent },
+
+  { path: 'about', component: AboutComponent } 
+
+]
+
+'/' is omitted
+
+
+
+14
+
+
+Create Routes Module
+
+@NgModule({
+
+ declarations: [
+
+  HomeComponent,
+
+  AboutComponent
+
+ ],
+
+ imports: [ RouterModule.forRoot(routes) ],
+
+ exports: [ RouterModule ]
+
+})
+
+export class AppRoutesModule { }
+
+Registers all app routes (done only once)
+
+Define the App Routes Module using the decorator
+
+15
+
+
+Finally import the routes module in app module
+
+Create Routes Module (3)
+
+import { AppRoutesModule } from './routes.module.ts'
+
+// Other imports for core module
+
+
+
+@NgModule({
+
+ declarations: [ AppComponent ],
+
+ imports: [
+
+  BrowserModule,
+
+  AppRoutesModule,
+
+ ],
+
+})
+
+export class AppModule { } 
+
+
+
+16
+
+
+A basic usage of the RouterLink directive
+
+Bind to the directive a pass an array of parameters
+
+The RouterLink Directive
+
+<a routerLink="/user/profile">Profile Page</a>
+
+<a 
+
+ [routerLink]="[ '/user', 1, 'profile' ]">
+
+   Profile Page
+
+</a>
+
+17
+
+
+Inject the Angular Router in components
+
+Use it to navigate from one component to another
+
+Navigate Programmatically
+
+constructor(
+
+ private router: Router
+
+) { }
+
+From "@angular/router"
+
+loadData() {
+
+ // Service call goes here
+
+ this.router.navigate([ '/home' ])
+
+}
+
+18
+
+
+Define routes with parameters the following way
+
+Nested parameters
+
+Passing Parameters to Routes
+
+{ path: 'user/:id', component: UserDetailsComponent }
+
+{ 
+
+ path: 'user/:id/:username', 
+
+ component: UserProfileComponent 
+
+}
+
+19
+
+
+Inject ActivatedRoute in components
+
+Retrieve parameters directly from the snapshot
+
+Fetching Parameters 
+
+constructor(
+
+ private route: ActivatedRoute
+
+) { }
+
+ngOnInit() {
+
+  const id = this.route.snapshot.params['id']
+}
+
+Only runs one time when the component is initiated
+
+20
+
+
+To change the content of a component inside the same one
+use an Observable instead
+
+Fetching Parameters Reactively
+
+ngOnInit() {
+
+  this.route.params
+
+    .subscribe((params: Params) => {
+
+        const id = params['id']
+      }
+
+    )
+}
+
+21
+
+
+To pass query parameters/fragments attach directives
+
+Retrieve them from the snapshot
+
+Query Strings and Fragments
+
+<a
+
+   [routerLink]="[ '/users', user.id, user.name ]"
+
+   [queryParams]="{ search: 'Peter' }"
+
+   fragment="loading"
+
+</a>
+
+this.route.snapshot.queryParams
+
+this.route.snapshot.fragment
+
+22
+
+
+Create nested routing by defining child routes using the 
+children property of a route
+
+New router outlet needed at UsersComponent
+
+Setting Up Child (Nested) Routes
+
+{
+
+  path: 'users', component: UsersComponent, children: [
+
+    { path: ':id', component: UserComponent },
+
+    { path: ':id/details', component: UserDetailsComponent }
+
+  ]
+
+}
+
+<router-outlet></router-outlet>
+
+23
+
+
+If the requested URL doesn't match any paths for routes, show a 404 Not Found Page
+
+This is done by using a wildcard '**'
+
+To redirect from one path to another
+
+Using Wildcards and Redirects
+
+{ path: '**', component: PageNotFoundComponent }
+
+
+
+{ path: '', redirectTo: 'home', pathMatch: 'full' }
+
+Telling the router how to match a URL to the path of the route
+
+24
+
+
+Router Guards
+
+Protecting Routes
+
+
+Guards Overview
+
+Limiting access to a route is needed in 
+every application 
+
+In Angular there are route guards
+
+Build a guard service
+
+Register the service in an Angular module
+
+Add the guard to a desired route
+
+26
+
+
+27
+
+CanActivate Guard
+
+import { Injectable } from "@angular/core";
+
+import { 
+
+Router, CanActivate, 
+
+ActivatedRouteSnapshot, 
+
+RouterStateSnapshot 
+
+} from "@angular/router";
+
+The CanActivate guard checks criteria before activating a route
+
+It limits route access to specific users (register users, admins..)
+
+Called when the url changes
+
+
+Guard Example
+
+@Injectable()
+
+export class AuthGuard implements CanActivate {
+
+   canActivate(
+
+  route: ActivatedRouteSnapshot,
+
+  state: RouterStateSnapshot) : boolean {
+
+   return this.checkIfLogged(state.url);
+
+}
+
+
+
+checkIfLogged(url : string) : boolean {
+
+	// Use the authentication service
+
+}
+
+}}
+
+Create a guard that restricts non-authenticated users
+
+28
+
+
+The Angular Router provides a resolve property
+
+It takes a route resolver and allows your application
+to fetch data before navigating to the route
+
+Angular Router Resolver
+
+path: 'users', component: ServersComponent, children: [
+
+  { 
+
+    path: ':id', 
+
+    component: UserDetailsComponent, 
+
+    resolve: { user: UsersResolver } 
+
+  }
+
+]
+
+29
+
+
+Create the Resolver Guard
+
+Implement the Resolver
+
+@Injectable()
+
+export class UserResolver implements Resolve<User> {
+
+  resolve(route: ActivatedRouteSnapshot, 
+
+  state: RouterStateSnapshot) {
+
+    return this.usersService.getUserById(route.params['id']);
+
+  }
+
+}
+
+Inject the service inside the guard
+
+30
+
+
+Inside a Component fetch the data from the data property of 
+the snapshot
+
+Use It Inside a Component
+
+constructor (
+
+  private route: ActivatedRoute
+
+) {  }
+
+
+
+ngOnInit() {    
+
+  this.user = this.route.snapshot.data['user']; 
+
+}   
+
+The name bound inside the route resolver
+
+31
+
+
+
+
+
+
+
+
+Summary
+
+NgModules help organize an application
+
+Routing allows navigation without reloading 
+the page
+
+The Router Module in Angular is a powerful 
+tool
+
+It supports routing with params, child routes, route guards, resolvers and more
+
+import { NgModule } from '@angular/core'
+
+32
+
+
+Questions?
+
+
+SoftUni Diamond Partners
+
+34
+
+
+SoftUni Organizational Partners
+
+35
+
+
+This course (slides, examples, demos, exercises, homework, documents, videos and other assets) is copyrighted content
+
+Unauthorized copy, reproduction or use is illegal
+
+© SoftUni – https://softuni.org
+
+© Software University – https://softuni.bg
+
+License
+
+36
+
