@@ -12,10 +12,15 @@ import { ListsComponent } from './lists/lists.component';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { GridsComponent } from './grids/grids.component';
-import { MatGridListModule} from '@angular/material/grid-list';
-
-
-
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CardsComponent } from './cards/cards.component';
+import { MatCardModule } from '@angular/material/card';
+import { TabsComponent } from './tabs/tabs.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { SteppersComponent } from './steppers/steppers.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 
 @NgModule({
@@ -23,7 +28,12 @@ import { MatGridListModule} from '@angular/material/grid-list';
     AppComponent,
     MenusComponent,
     ListsComponent,
-    GridsComponent
+    GridsComponent,
+    ExpansionPanelComponent,
+    CardsComponent,
+    TabsComponent,
+    SteppersComponent,
+    MatStepperModule,
   ],
   imports: [
     BrowserModule,
@@ -35,6 +45,9 @@ import { MatGridListModule} from '@angular/material/grid-list';
     MatListModule,
     MatDividerModule,
     MatGridListModule,
+    MatExpansionModule,
+    MatCardModule,
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
