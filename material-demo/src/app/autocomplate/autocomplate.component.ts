@@ -8,6 +8,7 @@ import { map, startWith } from 'rxjs/operators';
   templateUrl: './autocomplate.component.html',
   styleUrls: ['./autocomplate.component.css']
 })
+
 export class AutocomplateComponent implements OnInit {
 
   options = [
