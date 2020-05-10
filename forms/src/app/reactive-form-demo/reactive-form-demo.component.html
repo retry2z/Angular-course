@@ -1,0 +1,12 @@
+<h1>Reactive Form demo</h1>
+<form class="container" (ngSubmit)="save()" [formGroup]="laptopForm">
+    <div *ngIf="laptopForm.controls.processor.errors && laptopForm.controls.processor.touched || laptopForm.controls.ram.errors && laptopForm.controls.processor.touched"
+        class="alert alert-danger">
+        {{laptopForm.controls.processor.errors | json}}
+    </div>
+    <input type="text" class="form-control" id="processor2" required formControlName="processor">
+    <br>
+    <input type="text" class="form-control" id="ram2" required formControlName="ram">
+    <br>
+    <button type="submit" class="btn btn-success">Submit</button>
+</form>

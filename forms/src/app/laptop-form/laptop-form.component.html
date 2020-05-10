@@ -1,0 +1,51 @@
+<div class="container">
+    <h1>Laptop Form</h1>
+    <form (ngSubmit)="onSubmit(f)" ngForm #f="ngForm">
+        <div class="form-group">
+            <label for="processor">Processor*</label>
+            <input name="processor" type="text" class="form-control" id="processor" required email #processor="ngModel"
+                ngModel>
+        </div>
+        <div *ngIf="processor.invalid && processor.touched" class="alert alert-danger">
+            {{processor.errors | json}}
+        </div>
+
+        <div class="form-group">
+            <label for="ram">RAM</label>
+            <input name="ram" type="text" class="form-control" id="ram" ngModel>
+        </div>
+
+        <div class="form-group">
+            <label for="hardDisk">Hard Disk (GB)</label>
+            <input name="hardDisk" type="number" class="form-control" id="hardDisk" ngModel>
+        </div>
+
+        <div class="form-group">
+            <label for="os" appHighlight>Operating System</label>
+            <select name="os" class="form-control" id="os" ngModel>
+                <option *ngFor="let os of operatingSystems" [value]="os">{{os}}</option>
+            </select>
+        </div>
+
+        <div ngModelGroup="passData" #passData="ngModelGroup" required>
+            <div class="form-group">
+                <label for="password">Password*</label>
+                <input name="password" type="text" class="form-control" id="password" ngModel required>
+            </div>
+            <div class="form-group">
+                <label for="rePassword">Confirm password*</label>
+                <input name="rePassword" type="password" class="form-control" id="rePassword" ngModel #rePassword="ngModel" required>
+            </div>
+
+            <div *ngIf="passData.touched && !passData.invalid && passData.value.password !== passData.value.rePassword" class="alert alert-danger">
+                Passwords doesn't match!
+            </div>
+
+            <div *ngIf="rePassword.touched && passData.invalid" class="alert alert-danger">
+                Invalid input! One of the fields are missing!
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="f.invalid">Submit</button>
+    </form>
+</div>

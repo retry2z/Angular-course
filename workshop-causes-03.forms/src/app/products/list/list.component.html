@@ -1,0 +1,17 @@
+<h1>Causes</h1>
+<div class="row">
+    <div class="col-xs-12" *ngIf="products">
+        <a *ngFor="let item of products" (click)="selectCauseHandler(item)" href="#" class="list-group-item clearfix">
+            <div class="pull-left">
+                <h4 class="list-group-item-heading">{{item.cause}}</h4>
+            </div>
+            <div class="pull-right">
+                <img [src]="item.imageUrl" alt="" class="img-responsive">
+            </div>
+        </a>
+    </div>
+
+    <div class="col-xs-12" *ngIf="!products">
+        <h3>No Causes yet.</h3>
+    </div>
+</div>
