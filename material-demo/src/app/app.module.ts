@@ -12,8 +12,6 @@ import { ListsComponent } from './lists/lists.component';
 import { MatListModule } from '@angular/material/list';
 import { MatDividerModule } from '@angular/material/divider';
 import { GridsComponent } from './grids/grids.component';
-<<<<<<< HEAD
-import { MatGridListModule } from '@angular/material/grid-list';
 import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CardsComponent } from './cards/cards.component';
@@ -22,12 +20,10 @@ import { TabsComponent } from './tabs/tabs.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SteppersComponent } from './steppers/steppers.component';
 import { MatStepperModule } from '@angular/material/stepper';
-=======
-import { MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 
->>>>>>> c7c91c0dd8150c68fac9876d68110f48146989fe
 
 
 @NgModule({
@@ -35,16 +31,11 @@ import { MatGridListModule} from '@angular/material/grid-list';
     AppComponent,
     MenusComponent,
     ListsComponent,
-<<<<<<< HEAD
     GridsComponent,
     ExpansionPanelComponent,
     CardsComponent,
     TabsComponent,
     SteppersComponent,
-    MatStepperModule,
-=======
-    GridsComponent
->>>>>>> c7c91c0dd8150c68fac9876d68110f48146989fe
   ],
   imports: [
     BrowserModule,
@@ -56,12 +47,10 @@ import { MatGridListModule} from '@angular/material/grid-list';
     MatListModule,
     MatDividerModule,
     MatGridListModule,
-<<<<<<< HEAD
     MatExpansionModule,
     MatCardModule,
     MatTabsModule,
-=======
->>>>>>> c7c91c0dd8150c68fac9876d68110f48146989fe
+    MatStepperModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
