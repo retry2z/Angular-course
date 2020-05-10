@@ -21,6 +21,13 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { SteppersComponent } from './steppers/steppers.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { FormsComponent } from './forms/forms.component';
+
+
+
 
 
 
@@ -36,6 +43,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     CardsComponent,
     TabsComponent,
     SteppersComponent,
+    FormsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,6 +59,9 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatCardModule,
     MatTabsModule,
     MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

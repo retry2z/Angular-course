@@ -1,0 +1,30 @@
+<mat-form-field>
+    <mat-label>Topic</mat-label>
+    <mat-select #selectRef>
+        <mat-option>None</mat-option>
+        <mat-optgroup label="Web">
+            <mat-option value="angular">Angular</mat-option>
+            <mat-option value="react">React</mat-option>
+            <mat-option value="vue">Vue</mat-option>
+        </mat-optgroup>
+        <mat-optgroup label="Group">
+            <mat-option value="asd">op1</mat-option>
+            <mat-option value="qwe">op2</mat-option>
+            <mat-option value="zxc">op3</mat-option>
+        </mat-optgroup>
+    </mat-select>
+    {{selectRef.value}}
+</mat-form-field>
+
+<br>
+
+<mat-form-field>
+    <mat-label>Favorite food</mat-label>
+    <input matInput placeholder="Ex. pizza">
+</mat-form-field>
+<br>
+<mat-form-field class="example-full-width">
+    <mat-label>Leave a comment</mat-label>
+    <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+</mat-form-field>
+<br>
