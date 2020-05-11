@@ -28,6 +28,11 @@ import { FormsComponent } from './forms/forms.component';
 import { AutocomplateComponent } from './autocomplate/autocomplate.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { TooltripComponent } from './tooltrip/tooltrip.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { DatePickerComponent } from './date-picker/date-picker.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 
@@ -44,6 +49,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     SteppersComponent,
     FormsComponent,
     AutocomplateComponent,
+    TooltripComponent,
+    DatePickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +71,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatSelectModule,
     ReactiveFormsModule,
     MatAutocompleteModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
