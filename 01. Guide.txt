@@ -14,7 +14,11 @@ ng serv // Compile and serve
 
 ng g d <name> // generate directive like validater in shared module.
 
-export core Modul 
+npm install @angular/fire firebase --save
+
+ng add @angular/fire
+
+ng add @angular/material
 
 
 
