@@ -33,6 +33,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { SnackbarsComponent } from './snackbars/snackbars.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -51,6 +53,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     AutocomplateComponent,
     TooltripComponent,
     DatePickerComponent,
+    SnackbarsComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,7 +77,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
-
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
