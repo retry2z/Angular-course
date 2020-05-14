@@ -2,6 +2,8 @@ npm i g @angular/cli
 
 ng new <app> //generate new app
 
+ng generate directive|pipe|service|class|guard|interface|enum|module
+
 ng g m <core> // generate new Modul // Head compomonent
 
 ng g c core/<navigation> // generate component
