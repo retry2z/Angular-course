@@ -23,6 +23,8 @@ ng add @angular/fire
 ng add @angular/material
 
 
+ng serve --host 192.168.0.10
+
 
 ----INIT-----
 CORE MODUL - CORE COMPONENT 
